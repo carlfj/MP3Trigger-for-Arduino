@@ -33,6 +33,7 @@ public:
 	void setVolume(byte level);	//0-255
 	void quietMode(boolean onoff, void (*function)(int));	//1 for on, 0 for off, callback function
 	void statusRequest();
+	int	 getNumberofTracks();
 	
 	void setLooping(bool doLoop, byte track);		//turn looping on/off
 	void setLoopingTrack(byte track);	//select the track to loop

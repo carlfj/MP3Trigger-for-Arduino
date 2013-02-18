@@ -195,3 +195,29 @@ void MP3Trigger::statusRequest()
 	// 	Serial.println(incomingByte, DEC);
 	// }
 }
+
+int MP3Trigger::getNumberofTracks()
+{
+	long counter = 0;
+	byte incomingByte;
+	int numSerialBytes = 0;
+	char numToConvert[3] = {};
+	int temp;
+	s->print("S1");
+	delay(5);
+	while(numSerialBytes < 3 && counter < 100000 ) // This reads up to three bytes, but only blocks for up to 3x100000 cycles
+	{
+		counter = counter + 1;
+		if (s->available() > 0) {
+                  // read the incoming byte:
+                  incomingByte = Serial1.read();
+                  if (numSerialBytes > 0)	// Note first byte returned is "="
+                    numToConvert[numSerialBytes-1] = char(incomingByte);
+                  delay(5);
+                  numSerialBytes = numSerialBytes+1;
+                  counter = 0;
+		}
+	}
+ 
+	return( atoi (numToConvert));
+}
